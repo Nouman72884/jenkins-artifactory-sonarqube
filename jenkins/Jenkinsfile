@@ -40,124 +40,124 @@ pipeline {
                 sh 'ls target/'
             }
         }
-        stage ('Publish Artifacts') {
-        steps {
-            rtUpload (
-                buildName: JOB_NAME,
-                buildNumber: BUILD_NUMBER,
-                serverId: "jenkins-artifactory", // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
-                spec: """{
-                            "files": [
-                                {
-                                    "pattern": "target/*",
-                                    "target": "maven-local/",
-                                    "recursive": "true"
-                                }
-                            ]
-                    }"""   
-                )
-        }
-     } 
-        stage ('upload Artifacts info') {
-            steps {
-            script{
-        def server = Artifactory.server 'jenkins-artifactory'
-        def uploadSpec = """{
-        "files": [
-            {
-            "pattern": "target/*.zip",
-            "target": "maven-local/app"
-            }
-        ]
-        }"""
-        server.upload(uploadSpec)
-     } 
-        }
-        }
-     stage ('Publish build info') {
-            steps {
-                rtPublishBuildInfo (
-                    serverId: "jenkins-artifactory"
-                )
-            }
-        }
-    //  stage ('pull artifact') {
-    //     steps{
-    //         rtDownload (
-    //         serverId: "jenkins-artifactory",
-    //         spec: """{
-    //             "files": [
-    //                 {
-    //                 "pattern": "maven-remote/my-app-1.0-SNAPSHOT.110.jar",
-    //                 "target": "app/"
-    //                 }
-    //             ]
-    //         }"""
-    //     )
-    //     }
-    // }
-    // stage ('copy file to remote server') {
-    //         steps {
-    //             sh 'scp -v -o StrictHostKeyChecking=no  -i /home/ec2-user/nouman_pk.pem app/* ubuntu@54.83.253.135:/home/ubuntu'
-    //             sh 'scp -v -o StrictHostKeyChecking=no  -i /home/ec2-user/nouman_pk.pem jenkins/scripts/deliver.sh ubuntu@54.83.253.135:/home/ubuntu'
-    //             sh 'ssh -i /home/ec2-user/nouman_pk.pem ubuntu@54.83.253.135 sudo chmod a+x deliver.sh'
-    //             sh 'ssh -i /home/ec2-user/nouman_pk.pem ubuntu@54.83.253.135 sudo  ./deliver.sh'
-    //         }
-    //     }
-    //  stage('transfer artifacts') {
-    //                 steps {
-    //                       sshPublisher(
-    //                       publishers:
-    //                       [sshPublisherDesc
-    //                       (configName: 'ubuntu',
-    //                        transfers: [sshTransfer(
-    //                        excludes: '',
-    //                        execCommand: 'cd /tmp/tmp/jenkins/scripts;sudo chmod a+x deliver.sh;sudo ./deliver.sh ',
-    //                        execTimeout: 350000,
-    //                        flatten: false,
-    //                        makeEmptyDirs: true,
-    //                        noDefaultExcludes: false,
-    //                        patternSeparator: '[, ]+',
-    //                        remoteDirectory: '/tmp',
-    //                        remoteDirectorySDF: false,
-    //                        removePrefix: '', sourceFiles: '**/*')],
-    //                        usePromotionTimestamp: false,
-    //                        useWorkspaceInPromotion: false,
-    //                        verbose: true)])
-    //                       }
-    //           }
-    //  stage ('slack notification') {
-    //      steps {
-    //          slackSend "Build waiting for approval - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-    //      }
-    //  }
-    //  stage('Approval') {
-    //         steps {
-    //             script {
-    //                 slackSend channel: '#slack-alerts', 
-    //                 message: "${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-    //                 mail (to: 'n72884@gmail.com',
-    //                 subject: "Job '${env.JOB_BASE_NAME}' (${env.BUILD_NUMBER}) is waiting for input",
-    //                 body: "Please go to console output of ${env.BUILD_URL} to approve or Reject.");
-    //                 def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'nouman'
-    //             }
-    //         }
-    //     }
-    // stage ('Deploy To QA'){
-    //     input
-    //         {
-    //             message "Do you want to proceed for production deployment?"
-    //         } 
-    //         steps {
-    //                     sh 'echo "Deploy into Prod"'
-
-    //                 }
-    //             }
-    // stage ('Trigger other pipeline') {
+    //     stage ('Publish Artifacts') {
     //     steps {
-    //         build job: 'java-hello-world-approved'
+    //         rtUpload (
+    //             buildName: JOB_NAME,
+    //             buildNumber: BUILD_NUMBER,
+    //             serverId: "jenkins-artifactory", // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+    //             spec: """{
+    //                         "files": [
+    //                             {
+    //                                 "pattern": "target/*",
+    //                                 "target": "maven-local/",
+    //                                 "recursive": "true"
+    //                             }
+    //                         ]
+    //                 }"""   
+    //             )
+    //     }
+    //  } 
+    //     stage ('upload Artifacts info') {
+    //         steps {
+    //         script{
+    //     def server = Artifactory.server 'jenkins-artifactory'
+    //     def uploadSpec = """{
+    //     "files": [
+    //         {
+    //         "pattern": "target/*.zip",
+    //         "target": "maven-local/app"
     //         }
-    // }
+    //     ]
+    //     }"""
+    //     server.upload(uploadSpec)
+    //  } 
+    //     }
+    //     }
+    //  stage ('Publish build info') {
+    //         steps {
+    //             rtPublishBuildInfo (
+    //                 serverId: "jenkins-artifactory"
+    //             )
+    //         }
+    //     }
+    // //  stage ('pull artifact') {
+    // //     steps{
+    // //         rtDownload (
+    // //         serverId: "jenkins-artifactory",
+    // //         spec: """{
+    // //             "files": [
+    // //                 {
+    // //                 "pattern": "maven-remote/my-app-1.0-SNAPSHOT.110.jar",
+    // //                 "target": "app/"
+    // //                 }
+    // //             ]
+    // //         }"""
+    // //     )
+    // //     }
+    // // }
+    // // stage ('copy file to remote server') {
+    // //         steps {
+    // //             sh 'scp -v -o StrictHostKeyChecking=no  -i /home/ec2-user/nouman_pk.pem app/* ubuntu@54.83.253.135:/home/ubuntu'
+    // //             sh 'scp -v -o StrictHostKeyChecking=no  -i /home/ec2-user/nouman_pk.pem jenkins/scripts/deliver.sh ubuntu@54.83.253.135:/home/ubuntu'
+    // //             sh 'ssh -i /home/ec2-user/nouman_pk.pem ubuntu@54.83.253.135 sudo chmod a+x deliver.sh'
+    // //             sh 'ssh -i /home/ec2-user/nouman_pk.pem ubuntu@54.83.253.135 sudo  ./deliver.sh'
+    // //         }
+    // //     }
+    // //  stage('transfer artifacts') {
+    // //                 steps {
+    // //                       sshPublisher(
+    // //                       publishers:
+    // //                       [sshPublisherDesc
+    // //                       (configName: 'ubuntu',
+    // //                        transfers: [sshTransfer(
+    // //                        excludes: '',
+    // //                        execCommand: 'cd /tmp/tmp/jenkins/scripts;sudo chmod a+x deliver.sh;sudo ./deliver.sh ',
+    // //                        execTimeout: 350000,
+    // //                        flatten: false,
+    // //                        makeEmptyDirs: true,
+    // //                        noDefaultExcludes: false,
+    // //                        patternSeparator: '[, ]+',
+    // //                        remoteDirectory: '/tmp',
+    // //                        remoteDirectorySDF: false,
+    // //                        removePrefix: '', sourceFiles: '**/*')],
+    // //                        usePromotionTimestamp: false,
+    // //                        useWorkspaceInPromotion: false,
+    // //                        verbose: true)])
+    // //                       }
+    // //           }
+    // //  stage ('slack notification') {
+    // //      steps {
+    // //          slackSend "Build waiting for approval - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+    // //      }
+    // //  }
+    // //  stage('Approval') {
+    // //         steps {
+    // //             script {
+    // //                 slackSend channel: '#slack-alerts', 
+    // //                 message: "${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+    // //                 mail (to: 'n72884@gmail.com',
+    // //                 subject: "Job '${env.JOB_BASE_NAME}' (${env.BUILD_NUMBER}) is waiting for input",
+    // //                 body: "Please go to console output of ${env.BUILD_URL} to approve or Reject.");
+    // //                 def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'nouman'
+    // //             }
+    // //         }
+    // //     }
+    // // stage ('Deploy To QA'){
+    // //     input
+    // //         {
+    // //             message "Do you want to proceed for production deployment?"
+    // //         } 
+    // //         steps {
+    // //                     sh 'echo "Deploy into Prod"'
+
+    // //                 }
+    // //             }
+    // // stage ('Trigger other pipeline') {
+    // //     steps {
+    // //         build job: 'java-hello-world-approved'
+    // //         }
+    // // }
   }
 }
   
