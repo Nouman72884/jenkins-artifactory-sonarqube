@@ -58,44 +58,22 @@ pipeline {
                 )
         }
      } 
-    //     stage ('upload Artifacts info') {
-    //         steps {
-    //         script{
-    //     def server = Artifactory.server 'jenkins-artifactory'
-    //     def uploadSpec = """{
-    //     "files": [
-    //         {
-    //         "pattern": "target/*.zip",
-    //         "target": "maven-local/app"
-    //         }
-    //     ]
-    //     }"""
-    //     server.upload(uploadSpec)
-    //  } 
-    //     }
-    //     }
-    //  stage ('Publish build info') {
-    //         steps {
-    //             rtPublishBuildInfo (
-    //                 serverId: "jenkins-artifactory"
-    //             )
-    //         }
-    //     }
-    // //  stage ('pull artifact') {
-    // //     steps{
-    // //         rtDownload (
-    // //         serverId: "jenkins-artifactory",
-    // //         spec: """{
-    // //             "files": [
-    // //                 {
-    // //                 "pattern": "maven-remote/my-app-1.0-SNAPSHOT.110.jar",
-    // //                 "target": "app/"
-    // //                 }
-    // //             ]
-    // //         }"""
-    // //     )
-    // //     }
-    // // }
+    
+     stage ('pull artifact') {
+        steps{
+            rtDownload (
+            serverId: "jenkins-artifactory",
+            spec: """{
+                "files": [
+                    {
+                    "pattern": "maven-remote/my-app-1.0-SNAPSHOT.110.jar",
+                    "target": "app/"
+                    }
+                ]
+            }"""
+        )
+        }
+    }
     // // stage ('copy file to remote server') {
     // //         steps {
     // //             sh 'scp -v -o StrictHostKeyChecking=no  -i /home/ec2-user/nouman_pk.pem app/* ubuntu@54.83.253.135:/home/ubuntu'
