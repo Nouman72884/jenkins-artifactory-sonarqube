@@ -76,34 +76,34 @@ pipeline {
     }
     stage ('copy file to remote server') {
             steps {
-                sh 'scp -v -o StrictHostKeyChecking=no  -i /home/ubuntu/nouman_pk.pem app/* ubuntu@3.235.178.92:/home/ubuntu'
-                sh 'scp -v -o StrictHostKeyChecking=no  -i /home/ubuntu/nouman_pk.pem jenkins/scripts/deliver.sh ubuntu@3.235.178.92:/home/ubuntu'
-                sh 'ssh -i /home/ubuntu/nouman_pk.pem ubuntu@3.235.178.92 sudo chmod a+x deliver.sh'
-                sh 'ssh -i /home/ubuntu/nouman_pk.pem ubuntu@3.235.178.92 sudo  ./deliver.sh'
+                sh 'sudo scp -v -o StrictHostKeyChecking=no  -i /home/ubuntu/nouman_pk.pem app/* ubuntu@3.235.178.92:/home/ubuntu'
+                sh 'sudo scp -v -o StrictHostKeyChecking=no  -i /home/ubuntu/nouman_pk.pem jenkins/scripts/deliver.sh ubuntu@3.235.178.92:/home/ubuntu'
+                sh 'sudo ssh -i /home/ubuntu/nouman_pk.pem ubuntu@3.235.178.92 sudo chmod a+x deliver.sh'
+                sh 'sudo ssh -i /home/ubuntu/nouman_pk.pem ubuntu@3.235.178.92 sudo  ./deliver.sh'
             }
         }
-    // //  stage('transfer artifacts') {
-    // //                 steps {
-    // //                       sshPublisher(
-    // //                       publishers:
-    // //                       [sshPublisherDesc
-    // //                       (configName: 'ubuntu',
-    // //                        transfers: [sshTransfer(
-    // //                        excludes: '',
-    // //                        execCommand: 'cd /tmp/tmp/jenkins/scripts;sudo chmod a+x deliver.sh;sudo ./deliver.sh ',
-    // //                        execTimeout: 350000,
-    // //                        flatten: false,
-    // //                        makeEmptyDirs: true,
-    // //                        noDefaultExcludes: false,
-    // //                        patternSeparator: '[, ]+',
-    // //                        remoteDirectory: '/tmp',
-    // //                        remoteDirectorySDF: false,
-    // //                        removePrefix: '', sourceFiles: '**/*')],
-    // //                        usePromotionTimestamp: false,
-    // //                        useWorkspaceInPromotion: false,
-    // //                        verbose: true)])
-    // //                       }
-    // //           }
+    //  stage('transfer artifacts') {
+    //                 steps {
+    //                       sshPublisher(
+    //                       publishers:
+    //                       [sshPublisherDesc
+    //                       (configName: 'ubuntu',
+    //                        transfers: [sshTransfer(
+    //                        excludes: '',
+    //                        execCommand: 'cd /tmp/tmp/jenkins/scripts;sudo chmod a+x deliver.sh;sudo ./deliver.sh ',
+    //                        execTimeout: 350000,
+    //                        flatten: false,
+    //                        makeEmptyDirs: true,
+    //                        noDefaultExcludes: false,
+    //                        patternSeparator: '[, ]+',
+    //                        remoteDirectory: '/tmp',
+    //                        remoteDirectorySDF: false,
+    //                        removePrefix: '', sourceFiles: '**/*')],
+    //                        usePromotionTimestamp: false,
+    //                        useWorkspaceInPromotion: false,
+    //                        verbose: true)])
+    //                       }
+    //           }
     // //  stage ('slack notification') {
     // //      steps {
     // //          slackSend "Build waiting for approval - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
