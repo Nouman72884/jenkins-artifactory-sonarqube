@@ -40,24 +40,24 @@ pipeline {
                 sh 'ls target/'
             }
         }
-    //     stage ('Publish Artifacts') {
-    //     steps {
-    //         rtUpload (
-    //             buildName: JOB_NAME,
-    //             buildNumber: BUILD_NUMBER,
-    //             serverId: "jenkins-artifactory", // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
-    //             spec: """{
-    //                         "files": [
-    //                             {
-    //                                 "pattern": "target/*",
-    //                                 "target": "maven-local/",
-    //                                 "recursive": "true"
-    //                             }
-    //                         ]
-    //                 }"""   
-    //             )
-    //     }
-    //  } 
+        stage ('Publish Artifacts') {
+        steps {
+            rtUpload (
+                buildName: JOB_NAME,
+                buildNumber: BUILD_NUMBER,
+                serverId: "jenkins-artifactory", // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+                spec: """{
+                            "files": [
+                                {
+                                    "pattern": "target/my-app-1.0-SNAPSHOT.jar",
+                                    "target": "maven_local/",
+                                    "recursive": "true"
+                                }
+                            ]
+                    }"""   
+                )
+        }
+     } 
     //     stage ('upload Artifacts info') {
     //         steps {
     //         script{
