@@ -8,37 +8,12 @@ pipeline {
 
  }
     stages {
-     stage ('pull artifact') {
+     stage ('download artifact') {
         steps{
-            rtDownload (
-            serverId: "artifactory",
-            spec: """{
-                "files": [
-                    {
-                    "pattern": "maven_local/my-app-1.0-SNAPSHOT.${params.Build_Number}.jar",
-                    "target": "app/"
-                    }
-                ]
-            }"""
-        )
+            sh 'curl -O   http://artifactory.eurustechnologies.info/artifactory/maven_local/my-app-1.0-SNAPSHOT.${params.Build_Number}.jar'
         }
     }
    
-    // // stage ('Deploy To QA'){
-    // //     input
-    // //         {
-    // //             message "Do you want to proceed for production deployment?"
-    // //         } 
-    // //         steps {
-    // //                     sh 'echo "Deploy into Prod"'
-
-    // //                 }
-    // //             }
-    // // stage ('Trigger other pipeline') {
-    // //     steps {
-    // //         build job: 'java-hello-world-approved'
-    // //         }
-    // // }
   }
 }
   
