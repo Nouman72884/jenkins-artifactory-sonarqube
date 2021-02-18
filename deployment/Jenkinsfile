@@ -11,7 +11,7 @@ pipeline {
      stage ('pull artifact') {
         steps{
             rtDownload (
-            serverId: "jenkins-artifactory",
+            serverId: "artifactory",
             spec: """{
                 "files": [
                     {
