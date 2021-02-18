@@ -50,7 +50,7 @@ pipeline {
                             "files": [
                                 {
                                     "pattern": "target/my-app-1.0-SNAPSHOT.jar",
-                                    "target": "maven_local/",
+                                    "target": "maven_local/my-app-1.0-SNAPSHOT.${BUILD_NUMBER}.jar",
                                     "recursive": "true"
                                 }
                             ]
@@ -59,29 +59,29 @@ pipeline {
         }
      } 
     
-     stage ('pull artifact') {
-        steps{
-            rtDownload (
-            serverId: "jenkins-artifactory",
-            spec: """{
-                "files": [
-                    {
-                    "pattern": "maven_local/my-app-1.0-SNAPSHOT.jar",
-                    "target": "app/"
-                    }
-                ]
-            }"""
-        )
-        }
-    }
-    stage ('copy file to remote server') {
-            steps {
-                sh 'sudo scp -v -o StrictHostKeyChecking=no -i /home/ubuntu/nouman_pk.pem /var/lib/jenkins/workspace/test-job/app/my-app-1.0-SNAPSHOT.jar ubuntu@3.235.178.92:/home/ubuntu'
-                sh 'sudo scp -v -o StrictHostKeyChecking=no  -i /home/ubuntu/nouman_pk.pem jenkins/scripts/deliver.sh ubuntu@3.235.178.92:/home/ubuntu'
-                sh 'sudo ssh -i /home/ubuntu/nouman_pk.pem ubuntu@3.235.178.92 sudo chmod a+x deliver.sh'
-                sh 'sudo ssh -i /home/ubuntu/nouman_pk.pem ubuntu@3.235.178.92 sudo  ./deliver.sh'
-            }
-        }
+    //  stage ('pull artifact') {
+    //     steps{
+    //         rtDownload (
+    //         serverId: "jenkins-artifactory",
+    //         spec: """{
+    //             "files": [
+    //                 {
+    //                 "pattern": "maven_local/my-app-1.0-SNAPSHOT.jar",
+    //                 "target": "app/"
+    //                 }
+    //             ]
+    //         }"""
+    //     )
+    //     }
+    // }
+    // stage ('copy file to remote server') {
+    //         steps {
+    //             sh 'sudo scp -v -o StrictHostKeyChecking=no -i /home/ubuntu/nouman_pk.pem /var/lib/jenkins/workspace/test-job/app/my-app-1.0-SNAPSHOT.jar ubuntu@3.235.178.92:/home/ubuntu'
+    //             sh 'sudo scp -v -o StrictHostKeyChecking=no  -i /home/ubuntu/nouman_pk.pem jenkins/scripts/deliver.sh ubuntu@3.235.178.92:/home/ubuntu'
+    //             sh 'sudo ssh -i /home/ubuntu/nouman_pk.pem ubuntu@3.235.178.92 sudo chmod a+x deliver.sh'
+    //             sh 'sudo ssh -i /home/ubuntu/nouman_pk.pem ubuntu@3.235.178.92 sudo  ./deliver.sh'
+    //         }
+    //     }
     //  stage('transfer artifacts') {
     //                 steps {
     //                       sshPublisher(
