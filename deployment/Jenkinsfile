@@ -1,0 +1,44 @@
+pipeline {
+    environment {
+        BUILD_NUM = ''
+    }
+    agent any
+    parameters {
+    string(name: 'Build_Number', defaultValue: '2', description: 'Build number')
+
+ }
+    stages {
+     stage ('pull artifact') {
+        steps{
+            rtDownload (
+            serverId: "jenkins-artifactory",
+            spec: """{
+                "files": [
+                    {
+                    "pattern": "maven_local/my-app-1.0-SNAPSHOT.${params.Build_Number}.jar",
+                    "target": "app/"
+                    }
+                ]
+            }"""
+        )
+        }
+    }
+   
+    // // stage ('Deploy To QA'){
+    // //     input
+    // //         {
+    // //             message "Do you want to proceed for production deployment?"
+    // //         } 
+    // //         steps {
+    // //                     sh 'echo "Deploy into Prod"'
+
+    // //                 }
+    // //             }
+    // // stage ('Trigger other pipeline') {
+    // //     steps {
+    // //         build job: 'java-hello-world-approved'
+    // //         }
+    // // }
+  }
+}
+  
