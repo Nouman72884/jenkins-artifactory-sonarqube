@@ -12,7 +12,7 @@ pipeline {
         steps{
             sh 'aws s3 cp s3://nouman-work/init_web_server.tpl init_web_server.tpl'
             sh 'sed -i -e s/my-app-1.0-SNAPSHOT.3.jar/my-app-1.0-SNAPSHOT.${BUILD_NUMBER}.jar/g init_web_server.tpl'
-            sh 'aws s3 cp init_web_server.tpl s3://mybucket/init_web_server.tpl'
+            sh 'aws s3 cp init_web_server.tpl s3://nouman-work/init_web_server.tpl'
         }
     }
    
