@@ -1,17 +1,14 @@
 pipeline {
-    environment {
-        BUILD_NUM = ''
-    }
     agent any
     parameters {
-    string(name: 'Build_Number', defaultValue: '2', description: 'Build number')
+    string(name: "Build_Number", defaultValue: "2", description: "Build number")
 
  }
     stages {
      stage ('download artifact') {
         steps{
             sh 'aws s3 cp s3://nouman-work/init_web_server.tpl init_web_server.tpl'
-            sh 'sed -i -e s/my-app-1.0-SNAPSHOT.3.jar/my-app-1.0-SNAPSHOT."${params.Build_Number}".jar/g init_web_server.tpl'
+            sh 'sed -i -e s/my-app-1.0-SNAPSHOT.5.jar/my-app-1.0-SNAPSHOT."${params.Build_Number}".jar/g init_web_server.tpl'
             sh 'aws s3 cp init_web_server.tpl s3://nouman-work/init_web_server.tpl'
         }
     }
