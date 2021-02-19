@@ -10,7 +10,9 @@ pipeline {
     stages {
      stage ('download artifact') {
         steps{
-            sh 'curl -O   http://artifactory.eurustechnologies.info/artifactory/maven_local/my-app-1.0-SNAPSHOT.${params.Build_Number}.jar'
+            sh 'aws s3 cp https://nouman-work.s3.amazonaws.com/init_web_server.tpl'
+            sh 'sed -i s/my-app-1.0-SNAPSHOT.3.jar/my-app-1.0-SNAPSHOT.${Build_Number}.jar/g init_web_server.tpl'
+            sh 'ls'
         }
     }
    
