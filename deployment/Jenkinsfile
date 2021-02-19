@@ -11,7 +11,7 @@ pipeline {
      stage ('download artifact') {
         steps{
             sh 'aws s3 cp s3://nouman-work/init_web_server.tpl init_web_server.tpl'
-            sh 'sed -i s/my-app-1.0-SNAPSHOT.3.jar/my-app-1.0-SNAPSHOT.${Build_Number}.jar/g init_web_server.tpl'
+            sh 'sed -i -e 's/my-app-1.0-SNAPSHOT.3.jar/my-app-1.0-SNAPSHOT.${Build_Number}.jar/g' init_web_server.tpl'
             sh 'ls'
         }
     }
