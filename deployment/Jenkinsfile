@@ -14,7 +14,7 @@ pipeline {
     }
      stage ('rotate autoscaling group') {
         steps{
-            sh 'aws autoscaling start-instance-refresh --auto-scaling-group-name test-asg'
+            sh 'aws autoscaling start-instance-refresh --auto-scaling-group-name test-test-test-test-test-test-autoscaling-group'
         }
     }
   }
