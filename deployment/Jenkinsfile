@@ -7,12 +7,19 @@ pipeline {
     stages {
      stage ('download artifact') {
         steps{
-            sh 'aws s3 cp s3://nouman-work/init_web_server.tpl init_web_server.tpl'
-            sh "sed -i -e s/my-app-1.0-SNAPSHOT.8.jar/my-app-1.0-SNAPSHOT.${params.Build_Number}.jar/g init_web_server.tpl"
-            sh 'aws s3 cp init_web_server.tpl s3://nouman-work/init_web_server.tpl'
+            sh 'aws s3 cp s3://nouman-work/init_web_server.sh init_web_server.sh'
+            sh "sed -i -e s/Var=.*/Var=my-app-1.0-SNAPSHOT.${params.Build_Number}.jar/g init_web_server.sh"
+            sh 'aws s3 cp init_web_server.sh s3://nouman-work/init_web_server.sh'
         }
     }
-   
+     stage ('rotate autoscaling group') {
+        steps{
+            sh 'aws autoscaling start-instance-refresh --auto-scaling-group-name test-asg'
+        }
+    }
   }
 }
+
+#sh "sed -i -e s/${app}/my-app-1.0-SNAPSHOT.${params.Build_Number}.jar/g init_web_server.sh"
+
   
