@@ -20,6 +20,3 @@ pipeline {
   }
 }
 
-#sh "sed -i -e s/${app}/my-app-1.0-SNAPSHOT.${params.Build_Number}.jar/g init_web_server.sh"
-
-  
