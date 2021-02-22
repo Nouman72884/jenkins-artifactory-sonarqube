@@ -1,12 +1,9 @@
 pipeline {
-    environment {
-        BUILD_NUM = ''
-    }
     agent any
-    tools {
-        maven 'maven'
-        jdk 'jdk'
-    }
+    // tools {
+    //     maven 'maven'
+    //     jdk 'jdk'
+    // }
     stages {
         // stage('SonarQube analysis') {
         //     steps {
